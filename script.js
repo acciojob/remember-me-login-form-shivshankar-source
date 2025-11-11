@@ -1,4 +1,5 @@
-//your JS code here. If required.
+// your JS code here. If required.
+
 let submitButton = document.getElementById("submit");
 let existingButton = document.getElementById("existing");
 let checkbox = document.getElementById("checkbox");
@@ -20,14 +21,16 @@ submitButton.addEventListener("click", function (e) {
 
   alert(`Logged in as ${username}`);
 
+
   if (checkbox.checked) {
     let data = { username, password };
     localStorage.setItem("data", JSON.stringify(data));
   } else {
+
     localStorage.removeItem("data");
   }
 
-
+  
   if (localStorage.getItem("data")) {
     existingButton.hidden = false;
   } else {
@@ -35,7 +38,11 @@ submitButton.addEventListener("click", function (e) {
   }
 });
 
+
 existingButton.addEventListener("click", function () {
-  let data = JSON.parse(localStorage.getItem("data"));
-  alert(`Logged in as ${data.username}`);
+  let stored = localStorage.getItem("data");
+  if (stored) {
+    let data = JSON.parse(stored);
+    alert(`Logged in as ${data.username}`);
+  }
 });
