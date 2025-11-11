@@ -1,48 +1,46 @@
 // your JS code here. If required.
 
-let submitButton = document.getElementById("submit");
-let existingButton = document.getElementById("existing");
-let checkbox = document.getElementById("checkbox");
-let usernameInput = document.getElementById("username");
-let passwordInput = document.getElementById("password");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const checkbox = document.getElementById("checkbox");
+const submitButton = document.getElementById("submit");
+const existingButton = document.getElementById("existing");
 
 
 window.addEventListener("load", () => {
-  if (localStorage.getItem("data")) {
-    existingButton.hidden = false;
-  }
-});
-
-submitButton.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  let username = usernameInput.value;
-  let password = passwordInput.value;
-
-  alert(`Logged in as ${username}`);
-
-
-  if (checkbox.checked) {
-    let data = { username, password };
-    localStorage.setItem("data", JSON.stringify(data));
-  } else {
-
-    localStorage.removeItem("data");
-  }
-
-  
-  if (localStorage.getItem("data")) {
+  const savedData = localStorage.getItem("credentials");
+  if (savedData) {
     existingButton.hidden = false;
   } else {
     existingButton.hidden = true;
   }
 });
 
+submitButton.addEventListener("click", (event) => {
+  event.preventDefault();
 
-existingButton.addEventListener("click", function () {
-  let stored = localStorage.getItem("data");
-  if (stored) {
-    let data = JSON.parse(stored);
-    alert(`Logged in as ${data.username}`);
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (username === "" || password === "") return;
+
+  alert(`Logged in as ${username}`);
+
+  if (checkbox.checked) {
+    // Remember user
+    const userData = { username, password };
+    localStorage.setItem("credentials", JSON.stringify(userData));
+    existingButton.hidden = false;
+  } else {
+    // Forget user
+    localStorage.removeItem("credentials");
+    existingButton.hidden = true;
+  }
+});
+
+existingButton.addEventListener("click", () => {
+  const savedData = JSON.parse(localStorage.getItem("credentials"));
+  if (savedData) {
+    alert(`Logged in as ${savedData.username}`);
   }
 });
