@@ -9,6 +9,7 @@ window.addEventListener("load", () => {
   existingButton.hidden = !savedData;
 });
 
+
 submitButton.addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -27,6 +28,7 @@ submitButton.addEventListener("click", (event) => {
     existingButton.hidden = true;
   }
 });
+
 
 existingButton.addEventListener("click", () => {
   const saved = JSON.parse(localStorage.getItem("credentials"));
